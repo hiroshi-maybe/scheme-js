@@ -4,10 +4,9 @@
 var assert = require('assert'),
     SchemeInterpreter = require('..');
 
-describe('process', function () {
+describe('Interpreter', function () {
 
-  it('should replace `pre` tag by handler', function () {
-    var src = '(list 1 2 3)';
-    assert.strictEqual(src, SchemeInterpreter.eval(src));
+  it('should evaluate... (placeholder)', function () {
+    assert.ok('placeholder');
   });
 });
