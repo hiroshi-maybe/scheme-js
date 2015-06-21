@@ -39,4 +39,11 @@ describe('parser', function () {
     var tokens = parse('(error "unexpected error")');
     assert.deepEqual(tokens, ['error', '"unexpected error"']);
   });
+
+  it('should parse line break as space', function () {
+    var tokens, src = '(define (fact n)\n(if (= n 0) 1\n\t(* n (fact (- n 1)))))';
+
+    tokens = parse(src);
+    assert.deepEqual(tokens, ['define', ['fact', 'n'], ['if', ['=','n','0'], '1', ['*', 'n', ['fact', ['-', 'n', '1']]]]]);
+  });
 });
