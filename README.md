@@ -1,3 +1,3 @@
 # scheme-js
 
-A scheme interpretor implemented by JavaScript, inspired by SICP.
+A scheme interpreter implemented by JavaScript, inspired by SICP.
