@@ -1,0 +1,31 @@
+{
+  "name": "scheme-js",
+  "version": "0.0.1",
+  "description": "A scheme interpreter implemented by JavaScript, inspired by SICP",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/k-ori/scheme-js.git"
+  },
+  "keywords": [
+    "scheme",
+    "interpreter"
+  ],
+  "author": "Hiroshi Kori <hiroshi.maybe@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "mocha": "^2.2.1"
+  },
+  "homepage": "https://github.com/k-ori/scheme-js",
+  "bugs": {
+    "url": "https://github.com/k-ori/scheme-js/issues"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha"
+  }
+}
