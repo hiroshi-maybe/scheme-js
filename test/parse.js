@@ -29,4 +29,14 @@ describe('parser', function () {
     var tokens = parse(' ( +   (  *    a  2  ) 2    )');
     assert.deepEqual(tokens, ['+', ['*', 'a', '2'], '2']);
   });
+
+  it('should parse value without list', function () {
+    var tokens = parse('1');
+    assert.deepEqual(tokens, '1');
+  });
+
+  it('should parse string', function () {
+    var tokens = parse('(error "unexpected error")');
+    assert.deepEqual(tokens, ['error', '"unexpected error"']);
+  });
 });
