@@ -46,4 +46,9 @@ describe('parser', function () {
     tokens = parse(src);
     assert.deepEqual(tokens, ['define', ['fact', 'n'], ['if', ['=','n','0'], '1', ['*', 'n', ['fact', ['-', 'n', '1']]]]]);
   });
+
+  it('should skip single line comment', function () {
+    var tokens = parse(' ( + (  * a  2  ) ; doubled\n2)');
+    assert.deepEqual(tokens, ['+', ['*', 'a', '2'], '2']);
+  });
 });
