@@ -9,6 +9,9 @@ describe('parser', function () {
   it('should parse flat S expression', function () {
     var tokens = parse('(+ 1 2 3)');
     assert.deepEqual(tokens, ['+', '1', '2', '3']);
+
+    tokens = parse('(= a #t)');
+    assert.deepEqual(tokens, ['=', 'a', '#t']);
   });
 
   it('should parse nested S expression', function () {
@@ -50,5 +53,18 @@ describe('parser', function () {
   it('should skip single line comment', function () {
     var tokens = parse(' ( + (  * a  2  ) ; doubled\n2)');
     assert.deepEqual(tokens, ['+', ['*', 'a', '2'], '2']);
+  });
+
+  it('should parse dotted S expression', function () {
+    var tokens = parse(' (a . b)');
+    assert.deepEqual(tokens, ['a', '.', 'b']);
+  });
+
+  it('should parse quote', function () {
+    var tokens = parse('\'(a b)');
+    assert.deepEqual(tokens, ['quote', ['a', 'b']]);
+
+    tokens = parse('(list \'a 1)');
+    assert.deepEqual(tokens, ['list', ['quote', 'a'], '1']);
   });
 });
