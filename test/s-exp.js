@@ -68,8 +68,28 @@ describe('S expression constructor', function () {
   });
 
   it('should create S expression with dotted list', function () {
-    var tokens = parse(' (a . b)');
-    assert.deepEqual(tokens, ['a', '.', 'b']);
+    var tokens = parse(' (a . b)'),
+        s = S.create(tokens);
+    assert.strictEqual(S.car(s), 'a');
+    assert.strictEqual(S.cdr(s), 'b');
+
+    tokens = parse('(a . b c)');
+    assert.throws(
+      function() {
+	s = S.create(tokens);
+      },
+	Error
+    );
+
+/*
+    tokens = parse('(. a)');
+    assert.throws(
+      function() {
+	s = S.create(tokens);
+      },
+	Error
+    );
+*/
   });
 
   it('should create S expression with quote', function () {
