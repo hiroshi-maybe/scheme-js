@@ -55,6 +55,15 @@ describe('parser', function () {
     assert.deepEqual(tokens, ['+', ['*', 'a', '2'], '2']);
   });
 
+  it('should throw error of unclosed list by single line comment', function () {
+    assert.throws(
+      function() {
+	var tokens = parse('(; 1)');
+      },
+	Error
+    );
+  });
+
   it('should parse dotted S expression', function () {
     var tokens = parse(' (a . b)');
     assert.deepEqual(tokens, ['a', '.', 'b']);

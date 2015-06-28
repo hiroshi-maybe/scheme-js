@@ -7,6 +7,15 @@ var assert = require('assert'),
 
 describe('S expression constructor', function () {
 
+  it('should pass through error occuring in parse phase', function () {
+    assert.throws(
+      function() {
+	s = S.create('(; 1)');
+      },
+	Error
+    );
+  });
+
   it('should validate atom', function () {
     var s = S.create('(set000! x (< a b))');
     assert.strictEqual(S.car(s), 'set000!');
