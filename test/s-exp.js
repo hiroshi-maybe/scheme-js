@@ -55,7 +55,7 @@ describe('S expression constructor', function () {
     var s = S.create('(error "unexpected error")');
 
     assert.strictEqual(S.car(s), 'error');
-    assert.strictEqual(S.cadr(s), 'unexpected error');
+    assert.strictEqual(S.cadr(s), '"unexpected error"');
   });
 
   it('should skip single line comment', function () {
