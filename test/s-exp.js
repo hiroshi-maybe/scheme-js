@@ -7,6 +7,8 @@ var assert = require('assert'),
 
 describe('S expression constructor', function () {
 
+  // todo: test atom
+
   it('should create flat S expression', function () {
     var s = S.create('(+ 1 2 3)');
 
@@ -66,10 +68,16 @@ describe('S expression constructor', function () {
   });
 
   it('should create S expression with dotted list', function () {
-    var s = S.create(' (a . b)');
 
+    var s = S.create(' (a . b)');
     assert.strictEqual(S.car(s), 'a');
     assert.strictEqual(S.cdr(s), 'b');
+
+    s = S.create('((a . b) . (c d))');
+    assert.strictEqual(S.caar(s), 'a');
+    assert.strictEqual(S.cdar(s), 'b');
+    assert.strictEqual(S.cadr(s), 'c');
+    assert.strictEqual(S.caddr(s), 'd');
 
     assert.throws(
       function() {
@@ -78,14 +86,13 @@ describe('S expression constructor', function () {
 	Error
     );
 
-/*
     assert.throws(
       function() {
 	s = S.create('(. a)');
       },
 	Error
     );
-*/
+
   });
 
   it('should create S expression with quote', function () {
