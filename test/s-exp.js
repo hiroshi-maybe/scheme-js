@@ -7,7 +7,25 @@ var assert = require('assert'),
 
 describe('S expression constructor', function () {
 
-  // todo: test atom
+  it('should validate atom', function () {
+    var s = S.create('(set000! x (< a b))');
+    assert.strictEqual(S.car(s), 'set000!');
+    assert.strictEqual(S.cadr(s), 'x');
+    assert.strictEqual(S.caaddr(s), '<');
+    assert.strictEqual(S.cadaddr(s), 'a');
+    assert.strictEqual(S.caddaddr(s), 'b');
+
+    s = S.create('(1a b)');
+    assert.strictEqual(S.car(s), 1);
+    assert.strictEqual(S.cadr(s), 'b');
+
+    assert.throws(
+      function() {
+	s = S.create('(, 1)');
+      },
+	Error
+    );
+  });
 
   it('should create flat S expression', function () {
     var s = S.create('(+ 1 2 3)');
@@ -17,12 +35,6 @@ describe('S expression constructor', function () {
     assert.strictEqual(S.caddr(s), 2);
     assert.strictEqual(S.cadddr(s), 3);
     assert.strictEqual(S.cddddr(s), null);
-
-    s = S.create('(= a #t)');
-    assert.strictEqual(S.car(s), '=');
-    assert.strictEqual(S.cadr(s), 'a');
-    assert.strictEqual(S.caddr(s), true);
-    assert.strictEqual(S.cdddr(s), null);
   });
 
   it('should create nested S expression', function () {
@@ -58,6 +70,14 @@ describe('S expression constructor', function () {
 
     assert.strictEqual(S.car(s), 'error');
     assert.strictEqual(S.cadr(s), '"unexpected error"');
+  });
+
+  it('should create boolean', function () {
+    var s = S.create('(= a #t)');
+    assert.strictEqual(S.car(s), '=');
+    assert.strictEqual(S.cadr(s), 'a');
+    assert.strictEqual(S.caddr(s), true);
+    assert.strictEqual(S.cdddr(s), null);
   });
 
   it('should skip single line comment', function () {
