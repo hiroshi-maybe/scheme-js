@@ -217,6 +217,17 @@ describe('S expression', function () {
       s = S.create('\'(a b)');
       assert.ok(!S.isSymbol(s));
     });
+
+    it('symbol should pull symbol literal', function () {
+      var s = S.create('\'a');
+      assert.strictEqual(S.symbol(s), 'a');
+
+      s = S.create('\'abc');
+      assert.strictEqual(S.symbol(s), 'abc');
+
+      s = S.create('\'!');
+      assert.strictEqual(S.symbol(s), '!');
+    });
   });
 
 });
