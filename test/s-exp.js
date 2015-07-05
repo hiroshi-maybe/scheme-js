@@ -228,6 +228,26 @@ describe('S expression', function () {
       s = S.create('\'!');
       assert.strictEqual(S.symbol(s), '!');
     });
+
+    it('should show S exp in string form', function () {
+      var s = S.create('a');
+      assert.strictEqual(S.toString(s), 'a');
+
+      s = S.create('(a b (c d))');
+      assert.strictEqual(S.toString(s), '(a b (c d))');
+
+      s = S.create('(error "abc def")');
+      assert.strictEqual(S.toString(s), '(error "abc def")');
+
+      s = S.create('(eq? x #t)');
+      assert.strictEqual(S.toString(s), '(eq? x true)');
+
+      s = S.create('\'(a 1)');
+      assert.strictEqual(S.toString(s), '\'(a 1)');
+
+      s = S.create('(a b . 1)');
+      assert.strictEqual(S.toString(s), '(a b . 1)');
+    });
   });
 
 });
