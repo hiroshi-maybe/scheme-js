@@ -2,11 +2,19 @@
 'use strict';
 
 var assert = require('assert'),
-    SchemeInterpreter = require('..');
+    Scheme = require('../lib/eval'),
+    S = require('../lib/S');
 
-describe('Interpreter', function () {
+var Env = Scheme.Env;
 
-  it('should evaluate... (placeholder)', function () {
-    assert.ok('placeholder');
+describe('Scheme', function () {
+
+  describe('evaluator', function() {
+    it('should evaluate definition', function () {
+      var env = new Env();
+      Scheme.eval('(define x 1)', env);
+      assert.strictEqual(env.lookupVar('x'), 1);
+    });
   });
+
 });
