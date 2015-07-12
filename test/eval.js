@@ -9,9 +9,16 @@ var assert = require('assert'),
 describe('Scheme', function () {
   describe('evaluator', function() {
     it('should evaluate definition', function () {
-      var env = new Env();
+      var env = Env.setup();
       scm_eval('(define x 1)', env);
       assert.strictEqual(env.lookupVar('x'), 1);
+    });
+
+    it('should evaluate if', function () {
+      var res,
+          env = Env.setup();
+      res = scm_eval('(if #t 100 -1)', env);
+      assert.strictEqual(res, 100);
     });
   });
 
