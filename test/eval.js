@@ -31,6 +31,13 @@ describe('Scheme', function () {
       res = scm_eval('(if #t 100 -1)', env);
       assert.strictEqual(res, 100);
     });
+
+    it('should evaluate begin', function () {
+      var res,
+          env = Env.setup();
+      res = scm_eval('(begin (define x 1) (set! x 10) x)', env);
+      assert.strictEqual(res, 10);
+    });
   });
 
 });
