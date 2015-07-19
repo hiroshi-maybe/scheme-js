@@ -8,6 +8,31 @@ var assert = require('assert'),
 
 describe('Scheme', function () {
   describe('evaluator', function() {
+    it('should evaluate self-evaluating value', function () {
+      var res, env = Env.setup();
+      res = scm_eval('1', env);
+      assert.strictEqual(res, 1);
+
+      res = scm_eval('"Hello Scheme"', env);
+      assert.strictEqual(res, '"Hello Scheme"');
+    });
+
+    it('should evaluate variable', function () {
+      var res, env = Env.setup();
+      env.defineVar('x', 100);
+      res = scm_eval('x', env);
+      assert.strictEqual(res, 100);
+    });
+
+/*    it('should evaluate quoted', function () {
+      var res, env = Env.setup();
+      res = scm_eval("'a", env);
+      assert.strictEqual(res, 'a');
+
+      res = scm_eval("(quote b)", env);
+      assert.strictEqual(res, 'b');
+    });*/
+
     it('should evaluate definition', function () {
       var env = Env.setup();
       scm_eval('(define x 1)', env);
