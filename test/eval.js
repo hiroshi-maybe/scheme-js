@@ -24,14 +24,26 @@ describe('Scheme', function () {
       assert.strictEqual(res, 100);
     });
 
-/*    it('should evaluate quoted', function () {
+    it('should evaluate quoted', function () {
       var res, env = Env.setup();
       res = scm_eval("'a", env);
       assert.strictEqual(res, 'a');
 
       res = scm_eval("(quote b)", env);
       assert.strictEqual(res, 'b');
-    });*/
+
+      res = scm_eval("'(a)", env);
+      assert.deepEqual(res, S.create('(a)'));
+
+      res = scm_eval("(quote (b))", env);
+      assert.deepEqual(res, S.create('(b)'));
+
+      res = scm_eval("'(a b)", env);
+      assert.deepEqual(res, S.create('(a b)'));
+
+      res = scm_eval("(quote (a b))", env);
+      assert.deepEqual(res, S.create('(a b)'));
+    });
 
     it('should evaluate definition', function () {
       var env = Env.setup();
