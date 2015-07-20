@@ -67,6 +67,15 @@ describe('Scheme', function () {
           env = Env.setup();
       res = scm_eval('(if #t 100 -1)', env);
       assert.strictEqual(res, 100);
+
+      res = scm_eval('(if #f 100 -1)', env);
+      assert.strictEqual(res, -1);
+
+      res = scm_eval('(if #t (if #f 100 101) -1)', env);
+      assert.strictEqual(res, 101);
+
+      res = scm_eval('(if #f -1 (if #f 100 101))', env);
+      assert.strictEqual(res, 101);
     });
 
     it('should evaluate begin', function () {
@@ -74,6 +83,14 @@ describe('Scheme', function () {
           env = Env.setup();
       res = scm_eval('(begin (define x 1) (set! x 10) x)', env);
       assert.strictEqual(res, 10);
+    });
+
+    it('should evaluate cond', function () {
+      var res,
+          env = Env.setup();
+      env.defineVar('x', 7);
+      res = scm_eval('(cond (#f 1) (#t 2) (else 3))', env);
+      assert.strictEqual(res, 2);
     });
   });
 
