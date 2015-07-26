@@ -88,9 +88,16 @@ describe('Scheme', function () {
     it('should evaluate cond', function () {
       var res,
           env = Env.setup();
-      env.defineVar('x', 7);
       res = scm_eval('(cond (#f 1) (#t 2) (else 3))', env);
       assert.strictEqual(res, 2);
+    });
+
+    it('should evaluate primitive procedure', function () {
+      var res,
+          env = Env.setup();
+      env.defineVar('x', 1);
+      res = scm_eval('(+ x 2 3))', env);
+      assert.strictEqual(res, 6);
     });
   });
 
