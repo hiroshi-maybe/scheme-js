@@ -96,7 +96,23 @@ describe('Scheme', function () {
       var res,
           env = Env.setup();
       env.defineVar('x', 1);
-      res = scm_eval('(+ x 2 3))', env);
+      res = scm_eval('(+ x 2 3)', env);
+      assert.strictEqual(res, 6);
+
+      res = scm_eval('(= x 1)', env);
+      assert.strictEqual(res, true);
+    });
+
+    it('should evaluate compound procedure', function () {
+      var res,
+          env = Env.setup();
+
+      scm_eval('(define (myadd a b) (+ a b))', env);
+      res = scm_eval('(myadd 1 2)', env);
+      assert.strictEqual(res, 3);
+
+      scm_eval('(define (factorial n) (if (= n 1) 1 (* n (factorial (- n 1)))))', env);
+      res = scm_eval('(factorial 3)', env);
       assert.strictEqual(res, 6);
     });
   });
