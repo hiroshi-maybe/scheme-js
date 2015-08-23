@@ -78,6 +78,18 @@ describe('Scheme', function () {
       assert.strictEqual(res, 101);
     });
 
+    it('should evaluate only #f as falsy ', function () {
+      var res,
+          env = Env.setup();
+
+      res = scm_eval('(if 0 1 -1)', env);
+      assert.strictEqual(res, 1);
+
+      res = scm_eval('(if #f 1 -1)', env);
+      assert.strictEqual(res, -1);
+    });
+
+
     it('should evaluate begin', function () {
       var res,
           env = Env.setup();
@@ -115,6 +127,38 @@ describe('Scheme', function () {
       res = scm_eval('(factorial 3)', env);
       assert.strictEqual(res, 6);
     });
+
+    it('should evaluate `and` expression', function () {
+      var res,
+          env = Env.setup();
+
+      res = scm_eval('(and 1 1)', env);
+      assert.strictEqual(res, 1);
+
+      res = scm_eval('(and 1 0)', env);
+      assert.strictEqual(res, 0);
+
+      res = scm_eval('(and 1 #f 2)', env);
+      assert.strictEqual(res, false);
+
+      res = scm_eval('(and 1 (< 1 2))', env);
+      assert.strictEqual(res, true);
+
+      res = scm_eval('(and 1 (< 1 2) 3)', env);
+      assert.strictEqual(res, 3);
+    });
+
+    it('should evaluate `and` and `or` lazily', function () {
+      var res,
+          env = Env.setup();
+
+      env.defineVar('x', 1);
+      res = scm_eval('(and 1 (< 2 1) (set! x 2))', env);
+      assert.strictEqual(res, false);
+      res = scm_eval('x', env);
+      assert.strictEqual(res, 1);
+    });
+
   });
 
 });
