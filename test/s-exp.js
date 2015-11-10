@@ -248,6 +248,28 @@ describe('S expression', function () {
       s = S.create('(a b . 1)');
       assert.strictEqual(S.toString(s), '(a b . 1)');
     });
+
+    it('should create list by cons', function () {
+      var s = S.cons('a');
+      assert.deepEqual(s, S.create('(a)'));
+
+      s = S.cons('a', S.cons('b'));
+      assert.deepEqual(s, S.create('(a b)'));
+    });
+
+    it('should create list from argument', function () {
+      var s = S.list('a');
+      assert.deepEqual(s, S.create('(a)'));
+
+      s = S.list('a', 'b', 'c');
+      assert.deepEqual(s, S.create('(a b c)'));
+    });
+
+    it('should map list ', function () {
+      var s = S.list(1, 2, 3);
+      var mapped = S.map(s, function(x) { return x+1; });
+      assert.deepEqual(mapped, S.create('(2 3 4)'));
+    });
   });
 
 });
