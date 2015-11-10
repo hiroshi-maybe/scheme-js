@@ -126,6 +126,15 @@ describe('Scheme', function () {
       scm_eval('(define (factorial n) (if (= n 1) 1 (* n (factorial (- n 1)))))', env);
       res = scm_eval('(factorial 3)', env);
       assert.strictEqual(res, 6);
+
+      res = scm_eval('((lambda (x) (+ x 1)) 10)', env);
+      assert.strictEqual(res, 11);
+
+      res = scm_eval('((lambda (x) (+ x 1)) 10)', env);
+      assert.strictEqual(res, 11);
+
+      res = scm_eval('((lambda (a) a) 1)', env);
+      assert.strictEqual(res, 1);
     });
 
     it('should evaluate `and` expression', function () {
@@ -159,6 +168,18 @@ describe('Scheme', function () {
       assert.strictEqual(res, 1);
     });
 
+    it('should evaluate `let`', function () {
+      var res,
+          env = Env.setup();
+
+      env.defineVar('x', 1);
+
+      res = scm_eval('(let ((a 1)) a)', env);
+      assert.strictEqual(res, 1);
+
+      res = scm_eval('(let ((a x) (b 2)) (+ a b))', env);
+      assert.strictEqual(res, 3);
+    });
   });
 
 });
